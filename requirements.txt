@@ -1,0 +1,16 @@
+fastapi
+uvicorn
+google-generativeai
+python-dotenv
+pydantic
+requests
+python-multipart
+structlog
+loguru
+httpx
+async-lru
+Pillow
+gradio
+pytest
+pytest-asyncio
+httpx
