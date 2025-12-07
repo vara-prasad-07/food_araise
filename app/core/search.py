@@ -11,7 +11,8 @@ class SerpAPIWrapper:
         self.base_url = "https://serpapi.com/search"
         self._lock = asyncio.Lock()
         self._last_request_ts = 0.0
-        self.min_interval = max(0.0, settings.SERPAPI_MIN_INTERVAL)
+        # Use the configured minimum interval for throttling. If a lower bound is required, enforce it in config.py and document it there.
+        self.min_interval = settings.SERPAPI_MIN_INTERVAL
         self.max_retries = max(0, settings.SERPAPI_MAX_RETRIES)
         self.backoff_factor = max(1.0, settings.SERPAPI_BACKOFF_FACTOR)
 
@@ -23,6 +24,52 @@ class SerpAPIWrapper:
             if wait > 0:
                 await asyncio.sleep(wait)
             self._last_request_ts = time.monotonic()
+
+    def _should_retry(self, attempt: int) -> bool:
+        return attempt < self.max_retries
+
+    async def _sleep_with_backoff(self, backoff: float) -> float:
+        await asyncio.sleep(backoff)
+        return backoff * self.backoff_factor
+
+    async def _request_with_retry(self, params: dict):
+        """Throttled SerpAPI call with retry/backoff. Returns (data, status, detail)."""
+        backoff = self.min_interval
+        last_status = None
+        last_detail = None
+
+        for attempt in range(self.max_retries + 1):
+            await self._throttle()
+
+            async with httpx.AsyncClient(timeout=10.0) as client:
+                response = await client.get(self.base_url, params=params)
+
+            last_status = response.status_code
+            last_detail = response.text[:300] if response.text else None
+
+            if response.status_code >= 400:
+                logger.warning(
+                    f"SerpAPI {response.status_code} received; backing off {backoff:.2f}s (attempt {attempt+1}/{self.max_retries})"
+                )
+
+                if self._should_retry(attempt):
+                    backoff = await self._sleep_with_backoff(backoff)
+                    continue
+
+                return None, last_status, last_detail
+
+            try:
+                data = response.json()
+            except ValueError:
+                logger.error("SerpAPI response JSON decode failed")
+                if self._should_retry(attempt):
+                    backoff = await self._sleep_with_backoff(backoff)
+                    continue
+                return None, last_status, "invalid json"
+
+            return data, last_status, last_detail
+
+        return None, last_status, last_detail
 
     @alru_cache(maxsize=128) # lightweight RAM-efficient caching
     async def search_food_info(self, query: str) -> dict:
@@ -45,30 +92,14 @@ class SerpAPIWrapper:
         }
 
         try:
-            # Throttled, retried request to reduce 429s
-            backoff = self.min_interval
-            for attempt in range(self.max_retries + 1):
-                await self._throttle()
-                try:
-                    async with httpx.AsyncClient(timeout=10.0) as client:
-                        response = await client.get(self.base_url, params=params)
-                    if response.status_code == 429:
-                        if attempt < self.max_retries:
-                            backoff *= self.backoff_factor
-                            logger.warning(f"SerpAPI 429 received; backing off {backoff:.2f}s (attempt {attempt+1}/{self.max_retries})")
-                            await asyncio.sleep(backoff)
-                            continue
-                        response.raise_for_status()
-                    response.raise_for_status()
-                    data = response.json()
-                    break
-                except httpx.HTTPStatusError as e:
-                    if e.response.status_code == 429 and attempt < self.max_retries:
-                        backoff *= self.backoff_factor
-                        logger.warning(f"SerpAPI 429 received; backing off {backoff:.2f}s (attempt {attempt+1}/{self.max_retries})")
-                        await asyncio.sleep(backoff)
-                        continue
-                    raise
+            data, last_status, last_detail = await self._request_with_retry(params)
+
+            if data is None:
+                return {
+                    "error": "SerpAPI request failed after retries",
+                    "status": last_status,
+                    "detail": last_detail,
+                }
             
             # RAM Efficiency: Extract only what's needed, discard the rest
             results = {
@@ -87,8 +118,14 @@ class SerpAPIWrapper:
             return results
 
         except httpx.HTTPError as e:
+            status = getattr(getattr(e, "response", None), "status_code", None)
+            detail = getattr(getattr(e, "response", None), "text", None)
             logger.error(f"SerpAPI request failed: {e}")
-            return {"error": str(e)}
+            return {
+                "error": str(e),
+                "status": status,
+                "detail": detail[:300] if detail else None,
+            }
         except Exception as e:
             logger.error(f"Unexpected search error: {e}")
             return {"error": str(e)}

@@ -12,7 +12,7 @@ class Settings(BaseSettings):
     # API Keys
     GOOGLE_API_KEY: str = ""
     SERPAPI_API_KEY: str = ""
-    SERPAPI_MIN_INTERVAL: float = 3.6  # seconds between requests
+    SERPAPI_MIN_INTERVAL: float = 1.0  # seconds between requests
     SERPAPI_MAX_RETRIES: int = 2
     SERPAPI_BACKOFF_FACTOR: float = 1.5
 
