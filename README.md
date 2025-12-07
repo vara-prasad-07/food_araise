@@ -198,3 +198,15 @@ huggingface-cli download abetlen/Phi-3.5-vision-instruct-gguf Phi-3.5-vision-ins
 - The SerpAPI client retries with backoff; if it still fails (429/5xx/invalid JSON/missing key), the analysis continues without web context.
 - Each item receives a fallback note (e.g., "Web search unavailable") so the LLM can still estimate nutrition from visual cues.
 - If cloud generation also fails, the system switches to the local failsafe models described above.
+
+## 🖥️ Quick UI Tester (Gradio)
+
+Run a simple UI to hit the running FastAPI server:
+
+```bash
+python ui_tester.py
+```
+
+- The UI exposes an **API Base URL** textbox. By default it points to the sample ngrok endpoint `https://sleepier-cammy-prejudiciable.ngrok-free.dev` unless you set `API_BASE_URL` in your environment.
+- Use the "Use sample ngrok URL" button to autofill that endpoint.
+- Upload an image, optionally toggle "Deep search", then click **Analyze** to send a request to `/api/v1/food/analyze`.

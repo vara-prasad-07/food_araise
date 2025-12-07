@@ -85,6 +85,7 @@ async def analyze_food_image_with_search(image_bytes: bytes, deep_search: bool =
            - Use the provided Web Search Context for "per 100g" values.
            - Multiply by your estimated weight.
            - Sum up totals.
+              - If web data is missing, use best-effort typical values for the dish; never return "Not Available"—always provide a numeric estimate with units.
 
         5. **Final Output Generation**:
            - Return the result in specific JSON format.
@@ -99,10 +100,10 @@ async def analyze_food_image_with_search(image_bytes: bytes, deep_search: bool =
                     "confidence": 0.95,
                     "description": "Visual reasoning: Covers 1/3 of 10-inch plate, thickness approx 1 inch.",
                     "nutrition": {{
-                        "calories": "Calculated Value",
-                        "protein": "...",
-                        "carbs": "...",
-                        "fats": "...",
+                        "calories": "Calculated Value (kcal)",
+                        "protein": "grams",
+                        "carbs": "grams",
+                        "fats": "grams",
                         "vitamins": ["Vit A", "B12"]
                     }},
                     "search_insights": {{ "source": "USDA data for [Search Term]" }}

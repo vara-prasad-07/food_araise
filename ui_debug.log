@@ -1,0 +1,2 @@
+2025-12-07 13:31:25.224 | INFO     | __main__:call_api:32 - Calling API at https://sleepier-cammy-prejudiciable.ngrok-free.dev/api/v1/food/analyze (deep_search=False)
+2025-12-07 13:38:14.275 | INFO     | __main__:call_api:59 - Calling API at https://sleepier-cammy-prejudiciable.ngrok-free.dev/api/v1/food/analyze (deep_search=False)

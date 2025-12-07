@@ -1,1 +1,2 @@
 [websearch 2025-12-07] fastapi check model file exists on startup failsafe local models download instructions huggingface hf_hub_download best practices -> see mcp_outputs/websearch_outputs.txt
+[fetch 2025-12-07] https://sleepier-cammy-prejudiciable.ngrok-free.dev -> see mcp_outputs/fetch_webpage_outputs.txt
