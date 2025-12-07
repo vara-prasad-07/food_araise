@@ -1,0 +1,7 @@
+Query: fastapi check model file exists on startup failsafe local models download instructions huggingface hf_hub_download best practices
+Results:
+- huggingface.co/docs/huggingface_hub/guides/download: hf_hub_download main function, cache_dir, symlinks, local_dir_use_symlinks False for real copies.
+- stackoverflow.com/questions/67595500/how-to-download-a-model-from-huggingface: snapshot_download usage.
+- lindevs.com/download-files-from-hugging-face-using-python: hf_hub_download with local_dir_use_symlinks.
+- baeldung.com/cs/hugging-face-model-download: snapshot_download example.
+- lzwjava.github.io/fix-slow-downloads-en: huggingface-cli download with local_dir_use_symlinks False.

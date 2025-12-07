@@ -1,0 +1,1 @@
+[websearch 2025-12-07] fastapi check model file exists on startup failsafe local models download instructions huggingface hf_hub_download best practices -> see mcp_outputs/websearch_outputs.txt

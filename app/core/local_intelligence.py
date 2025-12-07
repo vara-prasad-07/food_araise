@@ -14,6 +14,35 @@ class LocalIntelligenceClient:
         
         # We don't load models at init to save RAM until needed
 
+    def ensure_models_available(self, download_missing: bool = False) -> bool:
+        """Checks for required local GGUF files. Optionally downloads if missing."""
+        required = [
+            (settings.LOCAL_MODEL_LIGHT_REPO, settings.LOCAL_MODEL_LIGHT_FILENAME),
+            (settings.LOCAL_MODEL_HEAVY_REPO, settings.LOCAL_MODEL_HEAVY_FILENAME),
+        ]
+
+        missing = []
+        for repo, filename in required:
+            path = os.path.join(self.models_dir, filename)
+            if not os.path.isfile(path):
+                missing.append((repo, filename))
+
+        if not missing:
+            return True
+
+        logger.warning(f"Local failsafe models missing: {[f for _, f in missing]}")
+        if not download_missing:
+            return False
+
+        for repo, filename in missing:
+            try:
+                self._get_model_path(repo, filename)
+            except Exception as e:
+                logger.error(f"Auto-download failed for {filename}: {e}")
+                return False
+
+        return True
+
     def _get_model_path(self, repo_id: str, filename: str) -> str:
         """Downloads model if missing and returns path."""
         try:
@@ -46,19 +75,10 @@ class LocalIntelligenceClient:
             logger.info("Loading Light Model (Moondream)...")
             path = self._get_model_path(settings.LOCAL_MODEL_LIGHT_REPO, settings.LOCAL_MODEL_LIGHT_FILENAME)
             
-            # Moondream specific handler
-            chat_handler = MoondreamChatHandler(clip_model_path=path) # Moondream GGUF often bundles CLIP or handled differently, check specific llama-cpp-python impl.
-            # actually llama-cpp-python moondream support might just need the standard Llama class with chat_format="moondream" if built-in
-            # Safe bet: standard generic load first. specialized handlers can be tricky without exact version matching.
-            # UPDATE: Moondream in llama.cpp usually acts as a standard model or needs a specific handler. 
-            # For simplicity and robust fallback, we will use a generic "chat_handler" approach if available or just raw generation if simpler.
-            # Let's try standard Llama init which usually auto-detects GGUF metadata.
-            
             self.light_model = Llama(
                 model_path=path,
                 n_ctx=2048,
-                n_gpu_layers=0, # CPU
-                # chat_format="moondream" # Try auto-detection first
+                n_gpu_layers=0,
                 verbose=False
             )
 
@@ -90,6 +110,14 @@ class LocalIntelligenceClient:
         import base64
         
         target_model_type = "heavy" if deep_search else "light"
+        if not self.ensure_models_available(download_missing=True):
+            logger.error("Local failsafe models are not available and could not be downloaded.")
+            return {
+                "overall_description": "Local failsafe models are missing. Please download them (see README).",
+                "total_calories_estimate": "Unknown",
+                "items": [],
+                "note": "Failsafe unavailable"
+            }
         self._load_model(target_model_type)
         model = self.heavy_model if deep_search else self.light_model
         
@@ -140,7 +168,7 @@ class LocalIntelligenceClient:
             if start != -1 and end != -1:
                 json_str = content[start:end]
                 return json.loads(json_str)
-        except:
+        except Exception:
             pass
             
         # Fallback if valid JSON not found

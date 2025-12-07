@@ -1,25 +1,29 @@
 # Food Agent Server 🍎🤖
 
-**Enterprise-Grade AI Food Analysis System**
+Enterprise-Grade AI Food Analysis System
 
 A high-performance, asynchronous FastAPI backend that leverages cutting-edge Multimodal LLMs (Gemini 3/2.5) and Real-Time Web Search (SerpAPI) to provide accurate, scientifically grounded nutritional assessments from food images.
 
 ## 🚀 Key Features
 
 ### 🧠 Advanced AI Intelligence
+
 - **Model Fallback Strategy**: Automatically iterates through a prioritized list of models (`Gemini 3 Pro` -> `2.5 Pro` -> `2.5 Flash`) to ensure maximum reliability and uptime.
 - **Chain-of-Thought Vision**: Uses a "Dietitian Persona" prompt with 5-step spatial reasoning (Scene Analysis -> Segmentation -> Volumetric Estimation -> Weight Conversion -> Calculation).
 - **Hallucination Reduction**: Grounds all nutritional data in real-time search results rather than relying solely on LLM training data.
 
 ### ⚡ Performance & Efficiency
+
 - **Parallel Processing**: Uses `asyncio` to perform web searches for multiple food items simultaneously, drastically reducing latency.
 - **Smart Caching**: Implements LRU (Least Recently Used) caching for search queries to minimize API costs and response time.
 - **RAM Optimization**: Automatically resizes high-resolution images to efficient dimensions (1024px) before processing to prevent memory overflows.
 
 ### 🛠 Enterprise Architecture
+
 - **SerpAPI Integration**: "Identify-Search-Synthesize" workflow for verified data.
 - **Robust Logging**: Detailed structured logs via `loguru` for debugging and audit trails.
 - **Async I/O**: Fully non-blocking network calls using `httpx`.
+- **Local Failsafe**: Automatic switch to on-device GGUF models when cloud APIs or SerpAPI are unavailable.
 
 ---
 
@@ -53,19 +57,22 @@ graph TD
 
 ## ⚙️ Installation
 
-1.  **Clone the repository**
-2.  **Create a virtual environment** (recommended)
-    ```bash
-    python -m venv venv
-    # Windows
-    .\venv\Scripts\activate
-    # Mac/Linux
-    source venv/bin/activate
-    ```
-3.  **Install Dependencies**
-    ```bash
-    pip install -r requirements.txt
-    ```
+1. **Clone the repository**
+1. **Create a virtual environment** (recommended)
+
+```bash
+python -m venv venv
+# Windows
+.\venv\Scripts\activate
+# Mac/Linux
+source venv/bin/activate
+```
+
+1. **Install Dependencies**
+
+```bash
+pip install -r requirements.txt
+```
 
 ## 🔐 Configuration
 
@@ -78,28 +85,36 @@ SERPAPI_API_KEY=your_serpapi_key_here
 
 # Optional Settings
 LOG_LEVEL=INFO
+SERPAPI_MIN_INTERVAL=1.0
+SERPAPI_MAX_RETRIES=2
+SERPAPI_BACKOFF_FACTOR=1.5
 ```
 
 ## 🏃‍♂️ Usage
 
 ### Start the Server
+
 Run the application using Uvicorn (uses `main.py` entry point):
 
 ```bash
 uvicorn main:app --reload
 ```
+
 *Server will start at `http://127.0.0.1:8000`*
 
 ### API Endpoints
 
 #### `POST /api/v1/food/analyze`
+
 Analyzes an uploaded image.
 
 **Request:**
+
 - `Content-Type`: `multipart/form-data`
 - `file`: (Binary Image file)
 
 **Response (JSON):**
+
 ```json
 {
   "overall_description": "A balanced meal featuring grilled salmon...",
@@ -124,7 +139,7 @@ Analyzes an uploaded image.
 
 ## 📂 Project Structure
 
-```
+```text
 food_agent_server/
 ├── app/
 │   ├── core/
@@ -142,4 +157,44 @@ food_agent_server/
 ```
 
 ## 🛡 Disclaimer
+
 This tool provides **estimates** based on visual analysis and search data. It is for informational purposes only and should not replace professional medical advice.
+
+---
+
+## 🧰 Local Failsafe Models (Offline/Backup)
+
+When cloud APIs or SerpAPI are unavailable, the backend switches to local GGUF models:
+
+- **Light (fast)**: `moondream/moondream2-gguf` → `moondream2-q4_k.gguf`
+- **Heavy (accurate)**: `abetlen/Phi-3.5-vision-instruct-gguf` → `Phi-3.5-vision-instruct-Q4_K_M.gguf`
+
+Files are stored in `local_models/`. At runtime the server checks for these files; if missing, it will try to download them automatically (using `huggingface_hub`) before running the failsafe. You can also pre-download them manually to avoid first-run latency:
+
+### Option A: Python (uses the same settings as the app)
+
+```python
+from huggingface_hub import hf_hub_download
+import os
+
+models_dir = os.path.join(os.getcwd(), "local_models")
+os.makedirs(models_dir, exist_ok=True)
+
+hf_hub_download(repo_id="moondream/moondream2-gguf", filename="moondream2-q4_k.gguf", local_dir=models_dir, local_dir_use_symlinks=False)
+hf_hub_download(repo_id="abetlen/Phi-3.5-vision-instruct-gguf", filename="Phi-3.5-vision-instruct-Q4_K_M.gguf", local_dir=models_dir, local_dir_use_symlinks=False)
+```
+
+### Option B: CLI (requires `huggingface-cli login` if the model is gated)
+
+```bash
+huggingface-cli download moondream/moondream2-gguf moondream2-q4_k.gguf --local-dir ./local_models --local-dir-use-symlinks False
+huggingface-cli download abetlen/Phi-3.5-vision-instruct-gguf Phi-3.5-vision-instruct-Q4_K_M.gguf --local-dir ./local_models --local-dir-use-symlinks False
+```
+
+> If downloads fail, check network access or Hugging Face authentication. The app will surface a clear error stating that failsafe models are missing.
+
+## 🌐 What if SerpAPI Fails?
+
+- The SerpAPI client retries with backoff; if it still fails (429/5xx/invalid JSON/missing key), the analysis continues without web context.
+- Each item receives a fallback note (e.g., "Web search unavailable") so the LLM can still estimate nutrition from visual cues.
+- If cloud generation also fails, the system switches to the local failsafe models described above.

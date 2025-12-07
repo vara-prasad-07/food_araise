@@ -41,7 +41,17 @@ async def analyze_food_image_with_search(image_bytes: bytes, deep_search: bool =
             info = await search_client.search_food_info(query)
             if info and "error" not in info:
                 return f"Item Search: {item}\nData: {json.dumps(info)}"
-            return None
+
+            # SerpAPI failed or was skipped (e.g., missing key). Provide context so the LLM can still reason.
+            error_detail = None
+            if info:
+                error_detail = info.get("detail") or info.get("error")
+                status = info.get("status")
+                if status:
+                    error_detail = f"Status {status}: {error_detail}"
+
+            fallback_note = error_detail or "Web search unavailable. Proceed with visual estimation only."
+            return f"Item Search: {item}\nData: {fallback_note}"
 
         # Threading/Concurrency: Run all searches at once
         search_results = await asyncio.gather(*[fetch_info(item) for item in items_list])
@@ -115,6 +125,7 @@ async def analyze_food_image_with_search(image_bytes: bytes, deep_search: bool =
         logger.warning(f"Cloud API/Search failed: {e}. Switching to Local Failsafe. Deep Search: {deep_search}")
         try:
             # Fallback to Local Intelligence
+            local_client.ensure_models_available(download_missing=True)
             return local_client.analyze_image(image_bytes, deep_search=deep_search)
         except Exception as local_e:
             logger.critical(f"Local Failsafe also failed: {local_e}")

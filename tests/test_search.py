@@ -29,6 +29,7 @@ class FakeClient:
 
     async def get(self, *_args, **_kwargs):
         # Async to mirror httpx.AsyncClient interface
+        await asyncio.sleep(0)
         return next(self._responses)
 
 
