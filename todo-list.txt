@@ -1,0 +1,18 @@
+# Task Todo List - food_araise
+
+## Analysis phase
+- Review Settings model and env handling to understand ValidationError.
+- Inspect .env contents and current config usage.
+
+## Research phase
+- (not started) Consult docs or references if configuration style uncertain.
+
+## Implementation phase
+- Add support for LOG_LEVEL or ignore extra env keys to prevent validation errors.
+- Ensure settings loading aligns with pydantic v2 settings style.
+
+## Testing phase
+- Run uvicorn or unit tests to confirm app loads without settings ValidationError.
+
+## Documentation phase
+- Summarize changes and any follow-up steps.
