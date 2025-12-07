@@ -271,3 +271,166 @@ For more information check: https://developer.mozilla.org/en-US/docs/Web/HTTP/St
 2025-12-07 11:05:19.518 | INFO     | app.core.vision:analyze_food_image_with_search:23 - Step 1: Identifying food items and estimating portions...
 2025-12-07 11:05:19.518 | WARNING  | app.core.vision:analyze_food_image_with_search:115 - Cloud API/Search failed: Cloud Down. Switching to Local Failsafe. Deep Search: False
 2025-12-07 11:05:19.518 | CRITICAL | app.core.vision:analyze_food_image_with_search:120 - Local Failsafe also failed: Local Down
+2025-12-07 11:07:04.548 | INFO     | app.routers.food:analyze_food:25 - Received image analysis request: test.jpg. Deep Search: False
+2025-12-07 11:07:04.565 | INFO     | app.core.vision:analyze_food_image_with_search:23 - Step 1: Identifying food items and estimating portions...
+2025-12-07 11:07:04.565 | INFO     | app.core.vision:analyze_food_image_with_search:34 - Identified items: ['Apple (1 medium)', 'Banana (1 small)']
+2025-12-07 11:07:04.565 | INFO     | app.core.vision:analyze_food_image_with_search:37 - Step 2: Searching for items in parallel...
+2025-12-07 11:07:04.566 | INFO     | app.core.vision:analyze_food_image_with_search:51 - Step 3: Synthesizing final response with advanced scripting...
+2025-12-07 11:07:04.582 | INFO     | app.core.vision:analyze_food_image_with_search:23 - Step 1: Identifying food items and estimating portions...
+2025-12-07 11:07:04.583 | WARNING  | app.core.vision:analyze_food_image_with_search:115 - Cloud API/Search failed: Cloud API Down. Switching to Local Failsafe. Deep Search: False
+2025-12-07 11:07:04.593 | INFO     | app.core.vision:analyze_food_image_with_search:23 - Step 1: Identifying food items and estimating portions...
+2025-12-07 11:07:04.594 | WARNING  | app.core.vision:analyze_food_image_with_search:115 - Cloud API/Search failed: Cloud API Down. Switching to Local Failsafe. Deep Search: True
+2025-12-07 11:07:04.606 | INFO     | app.core.vision:analyze_food_image_with_search:23 - Step 1: Identifying food items and estimating portions...
+2025-12-07 11:07:04.606 | WARNING  | app.core.vision:analyze_food_image_with_search:115 - Cloud API/Search failed: Cloud Down. Switching to Local Failsafe. Deep Search: False
+2025-12-07 11:07:04.607 | CRITICAL | app.core.vision:analyze_food_image_with_search:120 - Local Failsafe also failed: Local Down
+2025-12-07 11:07:04.617 | INFO     | app.core.search:search_food_info:84 - Searching SerpAPI for: apple calories
+2025-12-07 11:07:05.731 | WARNING  | app.core.search:_request_with_retry:51 - SerpAPI 429 received; backing off 1.00s (attempt 1/2)
+2025-12-07 11:07:05.732 | ERROR    | app.core.search:search_food_info:130 - Unexpected search error: maximum recursion depth exceeded
+2025-12-07 11:07:50.648 | INFO     | app.routers.food:analyze_food:25 - Received image analysis request: test.jpg. Deep Search: False
+2025-12-07 11:07:50.655 | INFO     | app.core.vision:analyze_food_image_with_search:23 - Step 1: Identifying food items and estimating portions...
+2025-12-07 11:07:50.655 | INFO     | app.core.vision:analyze_food_image_with_search:34 - Identified items: ['Apple (1 medium)', 'Banana (1 small)']
+2025-12-07 11:07:50.656 | INFO     | app.core.vision:analyze_food_image_with_search:37 - Step 2: Searching for items in parallel...
+2025-12-07 11:07:50.656 | INFO     | app.core.vision:analyze_food_image_with_search:51 - Step 3: Synthesizing final response with advanced scripting...
+2025-12-07 11:07:50.662 | INFO     | app.core.vision:analyze_food_image_with_search:23 - Step 1: Identifying food items and estimating portions...
+2025-12-07 11:07:50.662 | WARNING  | app.core.vision:analyze_food_image_with_search:115 - Cloud API/Search failed: Cloud API Down. Switching to Local Failsafe. Deep Search: False
+2025-12-07 11:07:50.666 | INFO     | app.core.vision:analyze_food_image_with_search:23 - Step 1: Identifying food items and estimating portions...
+2025-12-07 11:07:50.667 | WARNING  | app.core.vision:analyze_food_image_with_search:115 - Cloud API/Search failed: Cloud API Down. Switching to Local Failsafe. Deep Search: True
+2025-12-07 11:07:50.671 | INFO     | app.core.vision:analyze_food_image_with_search:23 - Step 1: Identifying food items and estimating portions...
+2025-12-07 11:07:50.671 | WARNING  | app.core.vision:analyze_food_image_with_search:115 - Cloud API/Search failed: Cloud Down. Switching to Local Failsafe. Deep Search: False
+2025-12-07 11:07:50.672 | CRITICAL | app.core.vision:analyze_food_image_with_search:120 - Local Failsafe also failed: Local Down
+2025-12-07 11:07:50.676 | WARNING  | app.core.search:search_food_info:81 - SerpAPI Key is missing. Skipping web search.
+2025-12-07 11:07:50.681 | INFO     | app.core.search:search_food_info:84 - Searching SerpAPI for: apple calories
+2025-12-07 11:07:50.681 | WARNING  | app.core.search:_request_with_retry:51 - SerpAPI 429 received; backing off 0.00s (attempt 1/2)
+2025-12-07 11:07:50.682 | WARNING  | app.core.search:_request_with_retry:51 - SerpAPI 429 received; backing off 0.00s (attempt 2/2)
+2025-12-07 11:07:50.682 | WARNING  | app.core.search:_request_with_retry:51 - SerpAPI 429 received; backing off 0.00s (attempt 3/2)
+2025-12-07 11:07:50.909 | INFO     | app.core.search:search_food_info:84 - Searching SerpAPI for: apple calories
+2025-12-07 11:07:50.909 | WARNING  | app.core.search:_request_with_retry:51 - SerpAPI 500 received; backing off 0.00s (attempt 1/1)
+2025-12-07 11:07:50.910 | WARNING  | app.core.search:_request_with_retry:51 - SerpAPI 500 received; backing off 0.00s (attempt 2/1)
+2025-12-07 11:07:50.918 | INFO     | app.core.search:search_food_info:84 - Searching SerpAPI for: apple calories
+2025-12-07 11:07:50.919 | ERROR    | app.core.search:_request_with_retry:64 - SerpAPI response JSON decode failed
+2025-12-07 11:07:50.919 | ERROR    | app.core.search:_request_with_retry:64 - SerpAPI response JSON decode failed
+2025-12-07 11:07:50.919 | ERROR    | app.core.search:_request_with_retry:64 - SerpAPI response JSON decode failed
+2025-12-07 11:07:50.927 | INFO     | app.core.search:search_food_info:84 - Searching SerpAPI for: apple calories
+2025-12-07 11:07:50.927 | ERROR    | app.core.search:_request_with_retry:64 - SerpAPI response JSON decode failed
+2025-12-07 11:08:12.022 | INFO     | app.routers.food:analyze_food:25 - Received image analysis request: test.jpg. Deep Search: False
+2025-12-07 11:08:12.030 | INFO     | app.core.vision:analyze_food_image_with_search:23 - Step 1: Identifying food items and estimating portions...
+2025-12-07 11:08:12.031 | INFO     | app.core.vision:analyze_food_image_with_search:34 - Identified items: ['Apple (1 medium)', 'Banana (1 small)']
+2025-12-07 11:08:12.031 | INFO     | app.core.vision:analyze_food_image_with_search:37 - Step 2: Searching for items in parallel...
+2025-12-07 11:08:12.031 | INFO     | app.core.vision:analyze_food_image_with_search:51 - Step 3: Synthesizing final response with advanced scripting...
+2025-12-07 11:08:12.038 | INFO     | app.core.vision:analyze_food_image_with_search:23 - Step 1: Identifying food items and estimating portions...
+2025-12-07 11:08:12.038 | WARNING  | app.core.vision:analyze_food_image_with_search:115 - Cloud API/Search failed: Cloud API Down. Switching to Local Failsafe. Deep Search: False
+2025-12-07 11:08:12.044 | INFO     | app.core.vision:analyze_food_image_with_search:23 - Step 1: Identifying food items and estimating portions...
+2025-12-07 11:08:12.044 | WARNING  | app.core.vision:analyze_food_image_with_search:115 - Cloud API/Search failed: Cloud API Down. Switching to Local Failsafe. Deep Search: True
+2025-12-07 11:08:12.050 | INFO     | app.core.vision:analyze_food_image_with_search:23 - Step 1: Identifying food items and estimating portions...
+2025-12-07 11:08:12.050 | WARNING  | app.core.vision:analyze_food_image_with_search:115 - Cloud API/Search failed: Cloud Down. Switching to Local Failsafe. Deep Search: False
+2025-12-07 11:08:12.050 | CRITICAL | app.core.vision:analyze_food_image_with_search:120 - Local Failsafe also failed: Local Down
+2025-12-07 11:08:12.055 | WARNING  | app.core.search:search_food_info:81 - SerpAPI Key is missing. Skipping web search.
+2025-12-07 11:08:12.059 | INFO     | app.core.search:search_food_info:84 - Searching SerpAPI for: apple calories
+2025-12-07 11:08:12.060 | WARNING  | app.core.search:_request_with_retry:51 - SerpAPI 429 received; backing off 0.00s (attempt 1/2)
+2025-12-07 11:08:12.060 | WARNING  | app.core.search:_request_with_retry:51 - SerpAPI 429 received; backing off 0.00s (attempt 2/2)
+2025-12-07 11:08:12.060 | WARNING  | app.core.search:_request_with_retry:51 - SerpAPI 429 received; backing off 0.00s (attempt 3/2)
+2025-12-07 11:08:12.287 | INFO     | app.core.search:search_food_info:84 - Searching SerpAPI for: apple calories
+2025-12-07 11:08:12.287 | WARNING  | app.core.search:_request_with_retry:51 - SerpAPI 500 received; backing off 0.00s (attempt 1/1)
+2025-12-07 11:08:12.287 | WARNING  | app.core.search:_request_with_retry:51 - SerpAPI 500 received; backing off 0.00s (attempt 2/1)
+2025-12-07 11:08:12.291 | INFO     | app.core.search:search_food_info:84 - Searching SerpAPI for: apple calories
+2025-12-07 11:08:12.291 | ERROR    | app.core.search:_request_with_retry:64 - SerpAPI response JSON decode failed
+2025-12-07 11:08:12.291 | ERROR    | app.core.search:_request_with_retry:64 - SerpAPI response JSON decode failed
+2025-12-07 11:08:12.292 | ERROR    | app.core.search:_request_with_retry:64 - SerpAPI response JSON decode failed
+2025-12-07 11:08:12.299 | INFO     | app.core.search:search_food_info:84 - Searching SerpAPI for: apple calories
+2025-12-07 11:08:12.300 | ERROR    | app.core.search:_request_with_retry:64 - SerpAPI response JSON decode failed
+2025-12-07 11:08:39.504 | INFO     | app.routers.food:analyze_food:25 - Received image analysis request: test.jpg. Deep Search: False
+2025-12-07 11:08:39.511 | INFO     | app.core.vision:analyze_food_image_with_search:23 - Step 1: Identifying food items and estimating portions...
+2025-12-07 11:08:39.511 | INFO     | app.core.vision:analyze_food_image_with_search:34 - Identified items: ['Apple (1 medium)', 'Banana (1 small)']
+2025-12-07 11:08:39.512 | INFO     | app.core.vision:analyze_food_image_with_search:37 - Step 2: Searching for items in parallel...
+2025-12-07 11:08:39.512 | INFO     | app.core.vision:analyze_food_image_with_search:51 - Step 3: Synthesizing final response with advanced scripting...
+2025-12-07 11:08:39.517 | INFO     | app.core.vision:analyze_food_image_with_search:23 - Step 1: Identifying food items and estimating portions...
+2025-12-07 11:08:39.517 | WARNING  | app.core.vision:analyze_food_image_with_search:115 - Cloud API/Search failed: Cloud API Down. Switching to Local Failsafe. Deep Search: False
+2025-12-07 11:08:39.522 | INFO     | app.core.vision:analyze_food_image_with_search:23 - Step 1: Identifying food items and estimating portions...
+2025-12-07 11:08:39.522 | WARNING  | app.core.vision:analyze_food_image_with_search:115 - Cloud API/Search failed: Cloud API Down. Switching to Local Failsafe. Deep Search: True
+2025-12-07 11:08:39.527 | INFO     | app.core.vision:analyze_food_image_with_search:23 - Step 1: Identifying food items and estimating portions...
+2025-12-07 11:08:39.527 | WARNING  | app.core.vision:analyze_food_image_with_search:115 - Cloud API/Search failed: Cloud Down. Switching to Local Failsafe. Deep Search: False
+2025-12-07 11:08:39.527 | CRITICAL | app.core.vision:analyze_food_image_with_search:120 - Local Failsafe also failed: Local Down
+2025-12-07 11:08:39.532 | WARNING  | app.core.search:search_food_info:81 - SerpAPI Key is missing. Skipping web search.
+2025-12-07 11:08:39.536 | INFO     | app.core.search:search_food_info:84 - Searching SerpAPI for: apple calories
+2025-12-07 11:08:39.537 | WARNING  | app.core.search:_request_with_retry:51 - SerpAPI 429 received; backing off 0.00s (attempt 1/2)
+2025-12-07 11:08:39.537 | WARNING  | app.core.search:_request_with_retry:51 - SerpAPI 429 received; backing off 0.00s (attempt 2/2)
+2025-12-07 11:08:39.541 | INFO     | app.core.search:search_food_info:84 - Searching SerpAPI for: apple calories
+2025-12-07 11:08:39.541 | WARNING  | app.core.search:_request_with_retry:51 - SerpAPI 500 received; backing off 0.00s (attempt 1/1)
+2025-12-07 11:08:39.541 | WARNING  | app.core.search:_request_with_retry:51 - SerpAPI 500 received; backing off 0.00s (attempt 2/1)
+2025-12-07 11:08:39.544 | INFO     | app.core.search:search_food_info:84 - Searching SerpAPI for: apple calories
+2025-12-07 11:08:39.545 | ERROR    | app.core.search:_request_with_retry:64 - SerpAPI response JSON decode failed
+2025-12-07 11:08:39.545 | ERROR    | app.core.search:_request_with_retry:64 - SerpAPI response JSON decode failed
+2025-12-07 11:08:39.549 | INFO     | app.core.search:search_food_info:84 - Searching SerpAPI for: apple calories
+2025-12-07 11:08:39.549 | ERROR    | app.core.search:_request_with_retry:64 - SerpAPI response JSON decode failed
+2025-12-07 11:09:08.461 | INFO     | app.routers.food:analyze_food:25 - Received image analysis request: test.jpg. Deep Search: False
+2025-12-07 11:09:08.469 | INFO     | app.core.vision:analyze_food_image_with_search:23 - Step 1: Identifying food items and estimating portions...
+2025-12-07 11:09:08.469 | INFO     | app.core.vision:analyze_food_image_with_search:34 - Identified items: ['Apple (1 medium)', 'Banana (1 small)']
+2025-12-07 11:09:08.469 | INFO     | app.core.vision:analyze_food_image_with_search:37 - Step 2: Searching for items in parallel...
+2025-12-07 11:09:08.470 | INFO     | app.core.vision:analyze_food_image_with_search:51 - Step 3: Synthesizing final response with advanced scripting...
+2025-12-07 11:09:08.475 | INFO     | app.core.vision:analyze_food_image_with_search:23 - Step 1: Identifying food items and estimating portions...
+2025-12-07 11:09:08.476 | WARNING  | app.core.vision:analyze_food_image_with_search:115 - Cloud API/Search failed: Cloud API Down. Switching to Local Failsafe. Deep Search: False
+2025-12-07 11:09:08.480 | INFO     | app.core.vision:analyze_food_image_with_search:23 - Step 1: Identifying food items and estimating portions...
+2025-12-07 11:09:08.480 | WARNING  | app.core.vision:analyze_food_image_with_search:115 - Cloud API/Search failed: Cloud API Down. Switching to Local Failsafe. Deep Search: True
+2025-12-07 11:09:08.485 | INFO     | app.core.vision:analyze_food_image_with_search:23 - Step 1: Identifying food items and estimating portions...
+2025-12-07 11:09:08.485 | WARNING  | app.core.vision:analyze_food_image_with_search:115 - Cloud API/Search failed: Cloud Down. Switching to Local Failsafe. Deep Search: False
+2025-12-07 11:09:08.486 | CRITICAL | app.core.vision:analyze_food_image_with_search:120 - Local Failsafe also failed: Local Down
+2025-12-07 11:09:08.491 | WARNING  | app.core.search:search_food_info:81 - SerpAPI Key is missing. Skipping web search.
+2025-12-07 11:09:08.494 | INFO     | app.core.search:search_food_info:84 - Searching SerpAPI for: apple calories
+2025-12-07 11:09:08.495 | WARNING  | app.core.search:_request_with_retry:51 - SerpAPI 429 received; backing off 0.00s (attempt 1/2)
+2025-12-07 11:09:08.495 | WARNING  | app.core.search:_request_with_retry:51 - SerpAPI 429 received; backing off 0.00s (attempt 2/2)
+2025-12-07 11:09:08.498 | INFO     | app.core.search:search_food_info:84 - Searching SerpAPI for: apple calories
+2025-12-07 11:09:08.498 | WARNING  | app.core.search:_request_with_retry:51 - SerpAPI 500 received; backing off 0.00s (attempt 1/1)
+2025-12-07 11:09:08.498 | WARNING  | app.core.search:_request_with_retry:51 - SerpAPI 500 received; backing off 0.00s (attempt 2/1)
+2025-12-07 11:09:08.501 | INFO     | app.core.search:search_food_info:84 - Searching SerpAPI for: apple calories
+2025-12-07 11:09:08.501 | ERROR    | app.core.search:_request_with_retry:64 - SerpAPI response JSON decode failed
+2025-12-07 11:09:08.502 | ERROR    | app.core.search:_request_with_retry:64 - SerpAPI response JSON decode failed
+2025-12-07 11:09:08.506 | INFO     | app.core.search:search_food_info:84 - Searching SerpAPI for: apple calories
+2025-12-07 11:09:08.506 | ERROR    | app.core.search:_request_with_retry:64 - SerpAPI response JSON decode failed
+2025-12-07 11:13:18.953 | INFO     | app.routers.food:analyze_food:25 - Received image analysis request: test.jpg. Deep Search: False
+2025-12-07 11:13:18.962 | INFO     | app.core.vision:analyze_food_image_with_search:23 - Step 1: Identifying food items and estimating portions...
+2025-12-07 11:13:18.962 | INFO     | app.core.vision:analyze_food_image_with_search:34 - Identified items: ['Apple (1 medium)', 'Banana (1 small)']
+2025-12-07 11:13:18.962 | INFO     | app.core.vision:analyze_food_image_with_search:37 - Step 2: Searching for items in parallel...
+2025-12-07 11:13:18.963 | INFO     | app.core.vision:analyze_food_image_with_search:51 - Step 3: Synthesizing final response with advanced scripting...
+2025-12-07 11:13:18.968 | INFO     | app.core.vision:analyze_food_image_with_search:23 - Step 1: Identifying food items and estimating portions...
+2025-12-07 11:13:18.968 | WARNING  | app.core.vision:analyze_food_image_with_search:115 - Cloud API/Search failed: Cloud API Down. Switching to Local Failsafe. Deep Search: False
+2025-12-07 11:13:18.971 | INFO     | app.core.vision:analyze_food_image_with_search:23 - Step 1: Identifying food items and estimating portions...
+2025-12-07 11:13:18.971 | WARNING  | app.core.vision:analyze_food_image_with_search:115 - Cloud API/Search failed: Cloud API Down. Switching to Local Failsafe. Deep Search: True
+2025-12-07 11:13:18.976 | INFO     | app.core.vision:analyze_food_image_with_search:23 - Step 1: Identifying food items and estimating portions...
+2025-12-07 11:13:18.976 | WARNING  | app.core.vision:analyze_food_image_with_search:115 - Cloud API/Search failed: Cloud Down. Switching to Local Failsafe. Deep Search: False
+2025-12-07 11:13:18.976 | CRITICAL | app.core.vision:analyze_food_image_with_search:120 - Local Failsafe also failed: Local Down
+2025-12-07 11:13:18.982 | WARNING  | app.core.search:search_food_info:81 - SerpAPI Key is missing. Skipping web search.
+2025-12-07 11:13:18.987 | INFO     | app.core.search:search_food_info:84 - Searching SerpAPI for: apple calories
+2025-12-07 11:13:18.987 | WARNING  | app.core.search:_request_with_retry:51 - SerpAPI 429 received; backing off 0.00s (attempt 1/2)
+2025-12-07 11:13:18.987 | WARNING  | app.core.search:_request_with_retry:51 - SerpAPI 429 received; backing off 0.00s (attempt 2/2)
+2025-12-07 11:13:18.987 | WARNING  | app.core.search:_request_with_retry:51 - SerpAPI 429 received; backing off 0.00s (attempt 3/2)
+2025-12-07 11:13:19.254 | INFO     | app.core.search:search_food_info:84 - Searching SerpAPI for: apple calories
+2025-12-07 11:13:19.254 | WARNING  | app.core.search:_request_with_retry:51 - SerpAPI 500 received; backing off 0.00s (attempt 1/1)
+2025-12-07 11:13:19.254 | WARNING  | app.core.search:_request_with_retry:51 - SerpAPI 500 received; backing off 0.00s (attempt 2/1)
+2025-12-07 11:13:19.262 | INFO     | app.core.search:search_food_info:84 - Searching SerpAPI for: apple calories
+2025-12-07 11:13:19.262 | ERROR    | app.core.search:_request_with_retry:64 - SerpAPI response JSON decode failed
+2025-12-07 11:13:19.262 | ERROR    | app.core.search:_request_with_retry:64 - SerpAPI response JSON decode failed
+2025-12-07 11:13:19.262 | ERROR    | app.core.search:_request_with_retry:64 - SerpAPI response JSON decode failed
+2025-12-07 11:13:19.270 | INFO     | app.core.search:search_food_info:84 - Searching SerpAPI for: apple calories
+2025-12-07 11:13:19.270 | ERROR    | app.core.search:_request_with_retry:64 - SerpAPI response JSON decode failed
+2025-12-07 11:13:47.799 | INFO     | app.routers.food:analyze_food:25 - Received image analysis request: test.jpg. Deep Search: False
+2025-12-07 11:13:47.806 | INFO     | app.core.vision:analyze_food_image_with_search:23 - Step 1: Identifying food items and estimating portions...
+2025-12-07 11:13:47.807 | INFO     | app.core.vision:analyze_food_image_with_search:34 - Identified items: ['Apple (1 medium)', 'Banana (1 small)']
+2025-12-07 11:13:47.807 | INFO     | app.core.vision:analyze_food_image_with_search:37 - Step 2: Searching for items in parallel...
+2025-12-07 11:13:47.807 | INFO     | app.core.vision:analyze_food_image_with_search:51 - Step 3: Synthesizing final response with advanced scripting...
+2025-12-07 11:13:47.813 | INFO     | app.core.vision:analyze_food_image_with_search:23 - Step 1: Identifying food items and estimating portions...
+2025-12-07 11:13:47.814 | WARNING  | app.core.vision:analyze_food_image_with_search:115 - Cloud API/Search failed: Cloud API Down. Switching to Local Failsafe. Deep Search: False
+2025-12-07 11:13:47.818 | INFO     | app.core.vision:analyze_food_image_with_search:23 - Step 1: Identifying food items and estimating portions...
+2025-12-07 11:13:47.818 | WARNING  | app.core.vision:analyze_food_image_with_search:115 - Cloud API/Search failed: Cloud API Down. Switching to Local Failsafe. Deep Search: True
+2025-12-07 11:13:47.824 | INFO     | app.core.vision:analyze_food_image_with_search:23 - Step 1: Identifying food items and estimating portions...
+2025-12-07 11:13:47.825 | WARNING  | app.core.vision:analyze_food_image_with_search:115 - Cloud API/Search failed: Cloud Down. Switching to Local Failsafe. Deep Search: False
+2025-12-07 11:13:47.825 | CRITICAL | app.core.vision:analyze_food_image_with_search:120 - Local Failsafe also failed: Local Down
+2025-12-07 11:13:47.834 | WARNING  | app.core.search:search_food_info:81 - SerpAPI Key is missing. Skipping web search.
+2025-12-07 11:13:47.839 | INFO     | app.core.search:search_food_info:84 - Searching SerpAPI for: apple calories
+2025-12-07 11:13:47.840 | WARNING  | app.core.search:_request_with_retry:51 - SerpAPI 429 received; backing off 0.00s (attempt 1/2)
+2025-12-07 11:13:47.844 | INFO     | app.core.search:search_food_info:84 - Searching SerpAPI for: apple calories
+2025-12-07 11:13:47.845 | WARNING  | app.core.search:_request_with_retry:51 - SerpAPI 500 received; backing off 0.00s (attempt 1/1)
+2025-12-07 11:13:47.845 | WARNING  | app.core.search:_request_with_retry:51 - SerpAPI 500 received; backing off 0.00s (attempt 2/1)
+2025-12-07 11:13:47.850 | INFO     | app.core.search:search_food_info:84 - Searching SerpAPI for: apple calories
+2025-12-07 11:13:47.850 | ERROR    | app.core.search:_request_with_retry:64 - SerpAPI response JSON decode failed
+2025-12-07 11:13:47.853 | INFO     | app.core.search:search_food_info:84 - Searching SerpAPI for: apple calories
+2025-12-07 11:13:47.854 | ERROR    | app.core.search:_request_with_retry:64 - SerpAPI response JSON decode failed
