@@ -1,8 +1,0 @@
-Source: https://serpapi.com/faq
-Query: SerpAPI rate limit delay requests
-Context snippet:
-- Hourly throughput limit: plans under 1M searches/month allow 20% of plan volume per hour (e.g., 5,000/mo => 1,000/hour).
-- Recommendation: spread searches evenly throughout each hour for best performance.
-- Successful searches count; cached/errored searches do not consume credits.
-
-[2025-12-07] Fetched https://sleepier-cammy-prejudiciable.ngrok-free.dev (content summary not captured).

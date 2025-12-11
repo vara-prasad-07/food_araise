@@ -33,12 +33,7 @@ class Settings(BaseSettings):
     # AI Model Configuration
     # Prioritized list based on research (Nov 2025 availability)
     GEMINI_MODELS: List[str] = [
-        "gemini-3-pro-preview", # Latest reasoning model
-        "gemini-2.5-pro",       # Stable high-capability
-        "gemini-2.5-flash",     # Fast and efficient
-        "gemini-2.0-flash-exp", # Experimental features
-        "gemini-1.5-pro",       # Validated fallback
-        "gemini-1.5-flash"
+        "gemini-2.0-flash-exp"
     ]
 
 

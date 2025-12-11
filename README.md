@@ -8,7 +8,7 @@ A high-performance, asynchronous FastAPI backend that leverages cutting-edge Mul
 
 ### 🧠 Advanced AI Intelligence
 
-- **Model Fallback Strategy**: Automatically iterates through a prioritized list of models (`Gemini 3 Pro` -> `2.5 Pro` -> `2.5 Flash`) to ensure maximum reliability and uptime.
+- **Model Selection**: Uses `gemini-2.0-flash-exp` for all generations (fallback list removed per configuration).
 - **Chain-of-Thought Vision**: Uses a "Dietitian Persona" prompt with 5-step spatial reasoning (Scene Analysis -> Segmentation -> Volumetric Estimation -> Weight Conversion -> Calculation).
 - **Hallucination Reduction**: Grounds all nutritional data in real-time search results rather than relying solely on LLM training data.
 
