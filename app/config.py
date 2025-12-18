@@ -21,15 +21,6 @@ class Settings(BaseSettings):
     DEBUG: bool = True
     LOG_LEVEL: str = "INFO"
 
-    # Local Failsafe Models
-    LOCAL_MODEL_LIGHT_REPO: str = "moondream/moondream2-gguf"
-    LOCAL_MODEL_LIGHT_FILENAME: str = "moondream2-q4_k.gguf" 
-    
-    LOCAL_MODEL_HEAVY_REPO: str = "abetlen/Phi-3.5-vision-instruct-gguf"
-    LOCAL_MODEL_HEAVY_FILENAME: str = "Phi-3.5-vision-instruct-Q4_K_M.gguf"
-    
-    LOCAL_MODELS_DIR: str = "local_models"
-
     # AI Model Configuration
     # Prioritized list based on research (Nov 2025 availability)
     GEMINI_MODELS: List[str] = [

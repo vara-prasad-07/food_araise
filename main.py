@@ -5,6 +5,7 @@ from app.config import settings
 from loguru import logger
 
 # Initialize Logging
+
 logger.add("server.log", rotation="500 MB", level="INFO")
 
 app = FastAPI(

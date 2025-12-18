@@ -23,7 +23,6 @@ A high-performance, asynchronous FastAPI backend that leverages cutting-edge Mul
 - **SerpAPI Integration**: "Identify-Search-Synthesize" workflow for verified data.
 - **Robust Logging**: Detailed structured logs via `loguru` for debugging and audit trails.
 - **Async I/O**: Fully non-blocking network calls using `httpx`.
-- **Local Failsafe**: Automatic switch to on-device GGUF models when cloud APIs or SerpAPI are unavailable.
 
 ---
 
@@ -162,42 +161,10 @@ This tool provides **estimates** based on visual analysis and search data. It is
 
 ---
 
-## 🧰 Local Failsafe Models (Offline/Backup)
-
-When cloud APIs or SerpAPI are unavailable, the backend switches to local GGUF models:
-
-- **Light (fast)**: `moondream/moondream2-gguf` → `moondream2-q4_k.gguf`
-- **Heavy (accurate)**: `abetlen/Phi-3.5-vision-instruct-gguf` → `Phi-3.5-vision-instruct-Q4_K_M.gguf`
-
-Files are stored in `local_models/`. At runtime the server checks for these files; if missing, it will try to download them automatically (using `huggingface_hub`) before running the failsafe. You can also pre-download them manually to avoid first-run latency:
-
-### Option A: Python (uses the same settings as the app)
-
-```python
-from huggingface_hub import hf_hub_download
-import os
-
-models_dir = os.path.join(os.getcwd(), "local_models")
-os.makedirs(models_dir, exist_ok=True)
-
-hf_hub_download(repo_id="moondream/moondream2-gguf", filename="moondream2-q4_k.gguf", local_dir=models_dir, local_dir_use_symlinks=False)
-hf_hub_download(repo_id="abetlen/Phi-3.5-vision-instruct-gguf", filename="Phi-3.5-vision-instruct-Q4_K_M.gguf", local_dir=models_dir, local_dir_use_symlinks=False)
-```
-
-### Option B: CLI (requires `huggingface-cli login` if the model is gated)
-
-```bash
-huggingface-cli download moondream/moondream2-gguf moondream2-q4_k.gguf --local-dir ./local_models --local-dir-use-symlinks False
-huggingface-cli download abetlen/Phi-3.5-vision-instruct-gguf Phi-3.5-vision-instruct-Q4_K_M.gguf --local-dir ./local_models --local-dir-use-symlinks False
-```
-
-> If downloads fail, check network access or Hugging Face authentication. The app will surface a clear error stating that failsafe models are missing.
-
 ## 🌐 What if SerpAPI Fails?
 
 - The SerpAPI client retries with backoff; if it still fails (429/5xx/invalid JSON/missing key), the analysis continues without web context.
 - Each item receives a fallback note (e.g., "Web search unavailable") so the LLM can still estimate nutrition from visual cues.
-- If cloud generation also fails, the system switches to the local failsafe models described above.
 
 ## 🖥️ Quick UI Tester (Gradio)
 

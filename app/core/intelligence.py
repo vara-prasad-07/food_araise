@@ -1,4 +1,4 @@
-import google.generativeai as genai
+from google import genai
 from app.config import settings
 from loguru import logger
 import time
@@ -9,7 +9,7 @@ class GeminiClient:
             logger.error("GOOGLE_API_KEY is missing!")
             raise ValueError("GOOGLE_API_KEY must be set in .env")
         
-        genai.configure(api_key=settings.GOOGLE_API_KEY)
+        self.client = genai.Client(api_key=settings.GOOGLE_API_KEY)
         self.models = settings.GEMINI_MODELS
 
     def generate_content(self, prompt: str, image_bytes: bytes = None) -> str:
@@ -33,17 +33,16 @@ class GeminiClient:
         for model_name in self.models:
             try:
                 logger.info(f"Attempting generation with model: {model_name}")
-                model = genai.GenerativeModel(model_name)
                 
                 # Basic generation config
-                config = genai.types.GenerationConfig(
-                    temperature=0.4,
-                    candidate_count=1
-                )
+                config = {
+                    "temperature": 0.4,
+                }
                 
-                response = model.generate_content(
-                    inputs,
-                    generation_config=config 
+                response = self.client.models.generate_content(
+                    model=model_name,
+                    contents=inputs,
+                    config=config
                 )
                 
                 if response.text:

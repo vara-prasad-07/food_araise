@@ -8,8 +8,6 @@ import asyncio
 import io
 from PIL import Image
 
-from app.core.local_intelligence import local_client
-
 async def analyze_food_image_with_search(image_bytes: bytes, deep_search: bool = False):
     """
     Orchestrates the Identify -> Search -> Synthesize workflow.
@@ -123,14 +121,8 @@ async def analyze_food_image_with_search(image_bytes: bytes, deep_search: bool =
         return json.loads(cleaned_json)
 
     except Exception as e:
-        logger.warning(f"Cloud API/Search failed: {e}. Switching to Local Failsafe. Deep Search: {deep_search}")
-        try:
-            # Fallback to Local Intelligence
-            local_client.ensure_models_available(download_missing=True)
-            return local_client.analyze_image(image_bytes, deep_search=deep_search)
-        except Exception as local_e:
-            logger.critical(f"Local Failsafe also failed: {local_e}")
-            raise HTTPException(status_code=500, detail="All AI systems failed.")
+        logger.error(f"Cloud API/Search failed: {e}")
+        raise HTTPException(status_code=500, detail=f"AI analysis failed: {str(e)}")
 
 def _resize_image(image_bytes: bytes, max_size=(1024, 1024)) -> bytes:
     """
